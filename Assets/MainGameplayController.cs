@@ -38,7 +38,7 @@ public class MainGameplayController : MonoBehaviour
         _OnGame = 0;
         for(int i = 0; i < 4; i++)
         {
-            _healthImage[i].color = Color.green;
+            _healthImage[i].color = Color.white;
         }
         for (int i = 0; i < _totalGames; i++)
         {
@@ -348,12 +348,12 @@ public class MainGameplayController : MonoBehaviour
 
             for (int i = 0; i < 4; i++)
             {
-                _healthImage[i].color = Color.black;
+                _healthImage[i].color = Color.gray;
             }
 
             for (int i = 0; i < _maxHP; i++)
             {
-                _healthImage[i].color = Color.green;
+                _healthImage[i].color = Color.white;
             }
         }
         else

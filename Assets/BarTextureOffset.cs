@@ -5,6 +5,7 @@ public class BarTextureOffset : MonoBehaviour
 {
     [SerializeField] private RawImage[] _cinemaBars;
     public float _speed;
+    public float _backTextureSpeed;
 
     void Start()
     {
@@ -33,6 +34,9 @@ public class BarTextureOffset : MonoBehaviour
 
             Vector2 offsetRight = new Vector2(Time.time * _speed, 0);
             _cinemaBars[1].material.SetTextureOffset("_MainTex", offsetRight);
+
+            Vector2 offsetCenter = new Vector2(Time.time * _backTextureSpeed, 0);
+            _cinemaBars[2].material.SetTextureOffset("_MainTex", offsetCenter);
         }
     }
 }
