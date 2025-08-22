@@ -6,6 +6,7 @@ using System.Collections;
 
 public class IntroMainScript : MonoBehaviour
 {
+    [SerializeField] private PauseController _scriptPause;
     public bool _shopActive;
     public Image _rotationBack;
     public bool _controllerOn;
@@ -46,6 +47,7 @@ public class IntroMainScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _scriptPause = GetComponent<PauseController>();
         candyShopAssets._parent.SetActive(_shopActive);
         switch (_shopActive)
         {
@@ -64,7 +66,7 @@ public class IntroMainScript : MonoBehaviour
     void Update()
     {
         _rotationBack.transform.Rotate(Vector3.forward * _rotationSpeed * Time.deltaTime);
-            if (Input.GetButtonDown("Submit") && !_gameStarted && _controllerOn) {
+            if (Input.GetButtonDown("Submit") && !_gameStarted && _controllerOn && !_scriptPause._onPause) {
                 StartCoroutine(GetComponent<MainGameplayController>().StartGameNumerator());
              
                 _gameStarted = true;
@@ -185,7 +187,7 @@ public class IntroMainScript : MonoBehaviour
 
 
 
-        if (Input.GetButtonDown("Submit"))
+        if (Input.GetButtonDown("Submit") && !_scriptPause._onPause)
         {
             switch (candyShopAssets._onPos)
             {

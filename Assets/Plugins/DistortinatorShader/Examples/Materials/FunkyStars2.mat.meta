@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a63a4fb29e491f9488b4bcf1c5416374
+timeCreated: 1544141575
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 144381
+  packageName: Distortionator - A Funky Background Shader
+  packageVersion: 3.0
+  assetPath: Assets/DistortinatorShader/Examples/Materials/FunkyStars2.mat
+  uploadId: 362851

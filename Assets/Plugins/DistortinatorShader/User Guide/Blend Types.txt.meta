@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8a322d4a6f8534f48929f4bf28fedbb0
+timeCreated: 1555484164
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 144381
+  packageName: Distortionator - A Funky Background Shader
+  packageVersion: 3.0
+  assetPath: Assets/DistortinatorShader/User Guide/Blend Types.txt
+  uploadId: 362851
