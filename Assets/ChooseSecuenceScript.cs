@@ -6,6 +6,7 @@ using TMPro;
 
 public class ChooseSecuenceScript : MonoBehaviour
 {
+    [SerializeField] private MainGameplayController _scriptMain;
     public List<GameObject> OnGameObjects = new List<GameObject>();
     public List<float> _GameObjectsXpos = new List<float>();
     public Transform _parentTransform;
@@ -27,7 +28,8 @@ public class ChooseSecuenceScript : MonoBehaviour
     bool _moved;
     public bool _gameStarts;
     public bool _changingPose;
-   
+    public Sprite[] _allTickets;
+    public Animator _handPick;
     public bool _win;
 
     void Start()
@@ -137,6 +139,7 @@ public class ChooseSecuenceScript : MonoBehaviour
             GameplayP.GetComponent<Image>().color = _allColors[_gameSecuenceNumber[i]];
             GameplayP.GetComponent<RectTransform>().anchoredPosition = new Vector2((300 * i), 0);
             GameplayP.name = "Object" + i.ToString();
+            GameplayP.GetComponent<Image>().sprite = _allTickets[Random.Range(0, _allTickets.Length)];
             OnGameObjects.Add(GameplayP);
             _GameObjectsXpos.Add(GameplayP.GetComponent<RectTransform>().anchoredPosition.x);
 
@@ -226,6 +229,8 @@ public class ChooseSecuenceScript : MonoBehaviour
 
     public IEnumerator ChangingPos()
     {
+        _handPick.GetComponent<RectTransform>().anchoredPosition = new Vector2(_pivotList[_onSelectorPos].transform.position.x, _handPick.GetComponent<RectTransform>().anchoredPosition.y);
+        _handPick.SetTrigger("Hand");
         GameObject temp = OnGameObjects[_onSelectorPos];
         OnGameObjects[_onSelectorPos] = OnGameObjects[_onSelectorPos + 1];
         OnGameObjects[_onSelectorPos + 1] = temp;
@@ -239,6 +244,7 @@ public class ChooseSecuenceScript : MonoBehaviour
         if (_win)
         {          
             _gameStarts = false;
+            StartCoroutine(WinCourutine());
         }
         else
         {
@@ -258,6 +264,19 @@ public class ChooseSecuenceScript : MonoBehaviour
             }
         }
         transform.parent.GetComponent<MainGameplayController>()._wins = _win;
+      
+        
+    }
+
+    public IEnumerator WinCourutine()
+    {
+        Debug.Log("PASA");
+        _scriptMain._scriptTimer._timer = 2;
+        for(int i = 0; i < _pivotList.Count; i++)
+        {
+            _pivotList[i].GetComponent<Animator>().SetTrigger("Glue");
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 
 

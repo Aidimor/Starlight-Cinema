@@ -48,16 +48,16 @@ public class IntroMainScript : MonoBehaviour
     void Start()
     {
         _scriptPause = GetComponent<PauseController>();
-        candyShopAssets._parent.SetActive(_shopActive);
-        switch (_shopActive)
-        {
-            case true:            
-                StartCoroutine(StartNumerator());
-                break;
-            case false:
-                break;
+        //candyShopAssets._parent.SetActive(_shopActive);
+        //switch (_shopActive)
+        //{
+        //    case true:            
+        //        StartCoroutine(StartNumerator());
+        //        break;
+        //    case false:
+        //        break;
     
-        }
+        //}
      
        
     }
@@ -66,50 +66,50 @@ public class IntroMainScript : MonoBehaviour
     void Update()
     {
         _rotationBack.transform.Rotate(Vector3.forward * _rotationSpeed * Time.deltaTime);
-            if (Input.GetButtonDown("Submit") && !_gameStarted && _controllerOn && !_scriptPause._onPause) {
-                StartCoroutine(GetComponent<MainGameplayController>().StartGameNumerator());
+        //    if (Input.GetButtonDown("Submit") && !_gameStarted && _controllerOn && !_scriptPause._onPause) {
+        //        StartCoroutine(GetComponent<MainGameplayController>().StartGameNumerator());
              
-                _gameStarted = true;
-            _logoAnimator.SetBool("Starts", false);
-        }
+        //        _gameStarted = true;
+        //    _logoAnimator.SetBool("Starts", false);
+        //}
 
-        if (candyShopAssets._CandyShopAvailable)
-            CandyShopVoid();
+        //if (candyShopAssets._CandyShopAvailable)
+        //    CandyShopVoid();
 
     }
 
-    public IEnumerator StartNumerator()
-    {
-        yield return new WaitForSeconds(1);
-       _logoAnimator.SetBool("Starts", true);
+    //public IEnumerator StartNumerator()
+    //{
+    //    yield return new WaitForSeconds(1);
+    //   _logoAnimator.SetBool("Starts", true);
 
-        for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._chars.Length; i++)
-        {
-            candyShopAssets._candyShopPositions[candyShopAssets._onPos]._chars[i].SetBool("Enter", true);
-            yield return new WaitForSeconds(0.25f);
-        }
+    //    for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._chars.Length; i++)
+    //    {
+    //        candyShopAssets._candyShopPositions[candyShopAssets._onPos]._chars[i].SetBool("Enter", true);
+    //        yield return new WaitForSeconds(0.25f);
+    //    }
 
-        for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons.Length; i++)
-        {
-            candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons[i].GetComponent<Animator>().enabled = true;
+    //    for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons.Length; i++)
+    //    {
+    //        candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons[i].GetComponent<Animator>().enabled = true;
 
-        }
+    //    }
 
-        for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons.Length; i++)
-        {
-            candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons[i].GetComponent<Animator>().SetBool("Active", true);
-            yield return new WaitForSeconds(0.1f);
-        }
+    //    for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons.Length; i++)
+    //    {
+    //        candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons[i].GetComponent<Animator>().SetBool("Active", true);
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
 
 
-        yield return new WaitForSeconds(1);
+    //    yield return new WaitForSeconds(1);
 
    
 
-        _controllerOn = true;
+    //    _controllerOn = true;
 
     
-    }
+    //}
 
     public void CandyShopVoid()
     {
@@ -120,6 +120,7 @@ public class IntroMainScript : MonoBehaviour
             new Vector3(candyShopAssets._candyShopPositions[candyShopAssets._onPos]._scale, candyShopAssets._candyShopPositions[candyShopAssets._onPos]._scale, 1)
      , 5 * Time.deltaTime);
 
+        if(_controllerOn)
         if(Input.GetAxisRaw("Horizontal") > 0 && !candyShopAssets._changing)
         {     
             if(candyShopAssets._onPos < 2)
@@ -207,7 +208,7 @@ public class IntroMainScript : MonoBehaviour
         if(candyShopAssets._onPos == 2)
         {
             int _onRealButton = candyShopAssets._candyShopPositions[candyShopAssets._onPos]._onButton;
-            Debug.Log("otadasd");
+          
             for (int i = 0; i < candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons.Length; i++){
                 candyShopAssets._candyShopPositions[candyShopAssets._onPos]._buttons[i].transform.localScale = new Vector3(1, 1, 1);          
             }

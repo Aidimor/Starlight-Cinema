@@ -7,6 +7,8 @@ using TMPro;
 
 public class MainGameplayController : MonoBehaviour
 {
+    public int _globalStation;
+    public GameObject _allMainPanels;
     public TimerScript _scriptTimer;
     public int _onLevel = 1;
     public Animator _sceneAnimator;
@@ -28,53 +30,112 @@ public class MainGameplayController : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {   
-     
+    {
+        StartCoroutine(StartGameNumerator());
+    }
+
+     void Update()
+    {
+        switch (_globalStation)
+        {
+            case 1:
+                GetComponent<IntroMainScript>().CandyShopVoid();
+                break;
+        }   
     }
 
     public IEnumerator StartGameNumerator()
     {
-        _maxHP = 4;
-        _OnGame = 0;
-        for(int i = 0; i < 4; i++)
-        {
-            _healthImage[i].color = Color.white;
-        }
-        for (int i = 0; i < _totalGames; i++)
-        {
-            _gamePlayList.Add(Random.Range(0, _scriptsObject.Length));
-        }
-        ResetValues();
-        _onTurnText.text = (_OnGame + 1).ToString("F0");
-        yield return new WaitForSeconds(0.1f);
-        _sceneAnimator.gameObject.SetActive(true);
-        _sceneAnimator.Play("CinemaShopIdle");
-        _sceneAnimator.SetBool("GameStarts", true);
-        // Wait until the current animation has finished
-        AnimatorStateInfo stateInfo = _sceneAnimator.GetCurrentAnimatorStateInfo(0);
-        float animationLength = stateInfo.length;
+        var IntroMain = GetComponent<IntroMainScript>();
 
-        // Optional: wait until animator is actually playing the desired animation
-        yield return new WaitUntil(() => _sceneAnimator.GetCurrentAnimatorStateInfo(0).IsName("CinemaShopIdle"));
+        switch (_globalStation)
+        {
+            case 0:
+                IntroMain._logoAnimator.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1);
+                IntroMain._logoAnimator.SetBool("Starts", true);
+                yield return new WaitForSeconds(2);
+                while (!Input.GetButtonDown("Submit"))
+                {
+                    yield return null;
+                }
+           
 
-        // Now wait until the animation finishes
-        yield return new WaitForSeconds(_sceneAnimator.GetCurrentAnimatorStateInfo(0).length);
-        _scriptTimer._secondText.gameObject.SetActive(true);
+
+          
+                GetComponent<IntroMainScript>()._logoAnimator.SetBool("Starts", false);
+                IntroMain.candyShopAssets._parent.gameObject.SetActive(true);
+                for (int i = 0; i < IntroMain.candyShopAssets._candyShopPositions[IntroMain.candyShopAssets._onPos]._chars.Length; i++)
+                {
+                    IntroMain.candyShopAssets._candyShopPositions[IntroMain.candyShopAssets._onPos]._chars[i].SetBool("Enter", true);
+                    yield return new WaitForSeconds(0.25f);
+                }
+
+                for (int i = 0; i < IntroMain.candyShopAssets._candyShopPositions[IntroMain.candyShopAssets._onPos]._buttons.Length; i++)
+                {
+                    IntroMain.candyShopAssets._candyShopPositions[IntroMain.candyShopAssets._onPos]._buttons[i].GetComponent<Animator>().enabled = true;
+
+                }
+
+                for (int i = 0; i < IntroMain.candyShopAssets._candyShopPositions[IntroMain.candyShopAssets._onPos]._buttons.Length; i++)
+                {
+                    IntroMain.candyShopAssets._candyShopPositions[IntroMain.candyShopAssets._onPos]._buttons[i].GetComponent<Animator>().SetBool("Active", true);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                _globalStation = 1;
+
+             
+
+
+             
+                yield return new WaitForSeconds(2);
+                IntroMain._controllerOn = true;
+
+
+                break;
+        }
+
+        //_maxHP = 4;
+        //_OnGame = 0;
+        //for(int i = 0; i < 4; i++)
+        //{
+        //    _healthImage[i].color = Color.white;
+        //}
+        //for (int i = 0; i < _totalGames; i++)
+        //{
+        //    _gamePlayList.Add(Random.Range(0, _scriptsObject.Length));
+        //}
+        //ResetValues();
+        //_onTurnText.text = (_OnGame + 1).ToString("F0");
+        //yield return new WaitForSeconds(0.1f);
+        //_sceneAnimator.gameObject.SetActive(true);
+        //_sceneAnimator.Play("CinemaShopIdle");
+        //_sceneAnimator.SetBool("GameStarts", true);
+        //// Wait until the current animation has finished
+        //AnimatorStateInfo stateInfo = _sceneAnimator.GetCurrentAnimatorStateInfo(0);
+        //float animationLength = stateInfo.length;
+
+        //// Optional: wait until animator is actually playing the desired animation
+        //yield return new WaitUntil(() => _sceneAnimator.GetCurrentAnimatorStateInfo(0).IsName("CinemaShopIdle"));
+
+        //// Now wait until the animation finishes
+        //yield return new WaitForSeconds(_sceneAnimator.GetCurrentAnimatorStateInfo(0).length);
+        //_scriptTimer._secondText.gameObject.SetActive(true);
        
-        _sceneAnimator.gameObject.SetActive(false);
-        _scriptsObject[_gamePlayList[_OnGame]].SetActive(true);
-        _gamePanel[_gamePlayList[_OnGame]].SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        //_sceneAnimator.gameObject.SetActive(false);
+        //_scriptsObject[_gamePlayList[_OnGame]].SetActive(true);
+        //_gamePanel[_gamePlayList[_OnGame]].SetActive(true);
+        //yield return new WaitForSeconds(0.5f);
     
-        yield return new WaitForSeconds(0.5f);
-        _gameStarts = true;
-        yield return new WaitForSeconds(0.25f);
-        if (_gamePlayList[_OnGame] != 9)
-        {
-            _scriptTimer._startTimer = true;
-            _timerAnimator.SetBool("TimerIn", true);
-            _cinemaAnimator.SetBool("CinemaIn", true);
-        }
+        //yield return new WaitForSeconds(0.5f);
+        //_gameStarts = true;
+        //yield return new WaitForSeconds(0.25f);
+        //if (_gamePlayList[_OnGame] != 9)
+        //{
+        //    _scriptTimer._startTimer = true;
+        //    _timerAnimator.SetBool("TimerIn", true);
+        //    _cinemaAnimator.SetBool("CinemaIn", true);
+        //}
 
     }
 
